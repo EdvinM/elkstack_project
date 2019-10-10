@@ -8,12 +8,12 @@ from olx.items import BookItem
 class BooksSpider(CrawlSpider):
     name = "books"
     allowed_domains = ["www.martinus.sk"]
-    start_urls = ['https://www.martinus.sk/?uMod=list&uTyp=sklad&type=kniha&page=1']
+    start_urls = ['https://www.martinus.sk/knihy?page=6000']
 
     rules = (
         Rule(LinkExtractor(allow=(), restrict_css=('.btn--ghost',)),
              callback="parse_item",
-             follow=False),)
+             follow=True),)
 
     def parse_item(self, response):
         item_links = response.css('a.link--product::attr(href)').extract()
@@ -27,7 +27,7 @@ class BooksSpider(CrawlSpider):
                                              '//*[@id="details"]/div/div/div[1]/div/dl[dt="Jazyk"][1]/dd/text()')
 
         if language != "slovenský":
-            pass
+            return
 
         title = self.parse_response_selector(response, 'h1.product-detail__title::text', 0)
         image_url = 'http:' + self.parse_response_selector(response, '.product-detail__image a.mj-product-preview img::attr(src)', 0)
