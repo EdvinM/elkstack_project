@@ -9,7 +9,7 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'olx'
+BOT_NAME = 'books'
 
 SPIDER_MODULES = ['olx.spiders']
 NEWSPIDER_MODULE = 'olx.spiders'
@@ -18,6 +18,7 @@ NEWSPIDER_MODULE = 'olx.spiders'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'olx (+http://www.yourdomain.com)'
 
+FEED_EXPORT_ENCODING = 'utf-8'
 FEED_URI = 'data/%(name)s/%(time)s.json'
 FEED_FORMAT = 'json'
 
