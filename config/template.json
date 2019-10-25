@@ -1,6 +1,6 @@
 {
   "template" : "martinus_data*",
-  "version" : 1,
+  "version" : 4,
   "settings": {
     "analysis": {
       "filter": {
@@ -14,11 +14,6 @@
           "dedup" : true,
           "recursion_level" : 0
         },
-        "synonym_filter": {
-          "type": "synonym",
-          "synonyms_path": "synonyms/sk_SK.txt",
-          "ignore_case": true
-        },
         "stopwords_SK": {
           "type": "stop",
           "stopwords_path": "stop-words/stop-words-slovak.txt",
@@ -26,26 +21,24 @@
         }
       },
       "analyzer": {
-        "slovencina_synonym": {
-          "type": "custom",
-          "tokenizer": "standard",
-          "filter": [
-            "stopwords_SK",
-            "lemmagen_filter_sk",
-            "lowercase",
-            "stopwords_SK",
-            "synonym_filter",
-            "asciifolding"
-          ]
-        },
         "slovencina": {
           "type": "custom",
           "tokenizer": "standard",
           "filter": [
+            "lemmagen_filter_sk",
+            "lowercase",
+            "sk_SK",
+            "asciifolding"
+          ]
+        },
+        "slovencina_stop": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
             "stopwords_SK",
             "lemmagen_filter_sk",
             "lowercase",
-            "stopwords_SK",
+            "sk_SK",
             "asciifolding"
           ]
         }
@@ -65,8 +58,8 @@
 	      "isbn": { "type": "text" },
 	      "language": { 
 	      	"type": "text",
-	        "analyzer": "slovencina",
-	        "search_analyzer": "slovencina"
+	      	"analyzer": "slovencina",
+            "search_analyzer": "slovencina_stop"
 	      },
 	      "normal_price": { "type": "float" },
 	      "page_number": { "type": "long" },
@@ -80,65 +73,85 @@
 
 	      "description": {
 	        "type": "text",
-	        "analyzer": "slovencina",
-	        "search_analyzer": "slovencina",
 	        "fields": {
 	          "keyword": {
 	            "type": "keyword"
+	          },
+	          "slovencina": {
+	          	"type": "text",
+	          	"analyzer": "slovencina",
+            	"search_analyzer": "slovencina_stop"
 	          }
 	        }
 	      },
 	      "publisher": {
 	        "type": "text",
-	        "analyzer": "slovencina",
-	        "search_analyzer": "slovencina",
 	        "fields": {
 	          "keyword": {
 	            "type": "keyword",
 	            "ignore_above": 256
+	          },
+	          "slovencina": {
+	          	"type": "text",
+	          	"analyzer": "slovencina"
 	          }
 	        }
 	      },
 	      "publishing_house": {
 	        "type": "text",
-	        "analyzer": "slovencina",
-	        "search_analyzer": "slovencina",
 	        "fields": {
 	          "keyword": {
 	            "type": "keyword",
 	            "ignore_above": 256
+	          },
+	          "slovencina": {
+	          	"type": "text",
+	          	"analyzer": "slovencina"
 	          }
 	        }
 	      },
 
 	      "author": {
 	        "type": "text",
-	        "analyzer": "slovencina",
-	        "search_analyzer": "slovencina",
 	        "fields": {
-	          "keyword": { "type": "keyword" }
+	          "keyword": { 
+	          	"type": "keyword" 
+	          },
+	          "slovencina": {
+	          	"type": "text",
+	          	"analyzer": "slovencina"
+	          }
 	        }
 	      },
 	      "pledge": {
 	        "type": "text",
-	        "analyzer": "slovencina",
-	        "search_analyzer": "slovencina",
 	        "fields": {
-	          "keyword": { "type": "keyword" }
+	          "keyword": { "type": "keyword" },
+	          "slovencina": {
+	          	"type": "text",
+	          	"analyzer": "slovencina"
+	          }
 	        }
 	      },
 	      "title": {
 	        "type": "text",
-	        "analyzer": "slovencina",
-	        "search_analyzer": "slovencina",
 	        "fields": {
-	          "keyword": { "type": "keyword" }
+	          "keyword": { "type": "keyword" },
+	          "slovencina": {
+	          	"type": "text",
+	          	"analyzer": "slovencina",
+            	"search_analyzer": "slovencina_stop"
+	          }
 	        }
 	      },
 	      "original_name": {
 	        "type": "text",
 	        "fields": {
-	          "keyword": { "type": "keyword" }
+	          "keyword": { "type": "keyword" },
+	          "slovencina": {
+	          	"type": "text",
+	          	"analyzer": "slovencina"
+	          }
 	        }
 	      }
 	    }
